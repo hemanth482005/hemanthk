@@ -1,24 +1,25 @@
-#include <stdio.h>
+#include<stdio.h>
 
 int main() {
-    int N, weight, accepted = 0, rejected = 0;
+    int productCount;
+    int weight;
 
-    printf("Enter number of products: ");
-    scanf("%d", &N);
+    printf("Enter number of products:");
+    scanf("%d", &productCount);
 
-    printf("Enter weights (in grams): ");
-    for (int i = 0; i < N; i++) {
-        scanf("%d", &weight);
-
-        if (weight >= 950 && weight <= 1050) {
-            accepted++;
+    int acceptedCount = 0;
+    int rejectedCount = 0;
+    for(int I = 1; I <= productCount; I++) {//1T 2T 3T 4T 5T 6F
+        printf("Enter weights (in grams):");
+        scanf("%d", &weight);   
+        if(weight >= 950 && weight <= 1050) {
+            acceptedCount++;                //1 2 3
         } else {
-            rejected++;
+            rejectedCount++;                //1 2
         }
     }
-
-    printf("Accepted Products: %d\n", accepted);
-    printf("Rejected Products: %d\n", rejected);
+    printf("Accepted Products: %d\n", acceptedCount);//3
+    printf("Rejected Products: %d\n", rejectedCount);//2
 
     return 0;
 }
