@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+// Function declarations
+float calculate_base_charge(char vehicle_type[], float distance);
+float calculate_discount(char vehicle_type[], float base_charge, float distance);
+int main() {
+    char vehicleType[10];
+    float distanceTraveled;
+    float baseCharge, totalTollTax, discount;
+    // Input: Vehicle Type and Distance Traveled
+    printf("Enter Vehicle Type (Car/Truck/Bus): ");
+    scanf("%s", vehicleType);
+    printf("Enter Distance Traveled (km): ");
+    scanf("%f", &distanceTraveled);
+    // Calculate base charge
+    baseCharge = calculate_base_charge(vehicleType, distanceTraveled);
+    if (baseCharge == -1) {
+        return 1; // Exit with error code if invalid vehicle type
+    }
+    // Calculate discount
+    discount = calculate_discount(vehicleType, baseCharge, distanceTraveled);
+    // Calculate total toll tax
+    totalTollTax = baseCharge - discount;
+    // Output results
+    printf("Vehicle Type: %s\n", vehicleType);
+    printf("Distance Traveled: %.2f km\n", distanceTraveled);
+    printf("Base Charge: ₹%.2f\n", baseCharge);
+    printf("Discount: ₹%.2f\n", discount);
+    printf("Total Toll Tax: ₹%.2f\n", totalTollTax);
+    return 0; // Successful execution
+}
+// Function to calculate the base charge based on vehicle type and distance traveled
+float calculate_base_charge(char vehicle_type[], float distance) {
+    if (strcmp(vehicle_type, "Car") == 0) {
+        return 5.0 * distance;  // ₹5 per km for Car
+    } else if (strcmp(vehicle_type, "Truck") == 0) {
+        return 10.0 * distance; // ₹10 per km for Truck
+    } else if (strcmp(vehicle_type, "Bus") == 0) {
+        return 8.0 * distance;  // ₹8 per km for Bus
+    } else {
+        printf("Invalid vehicle type. Please enter Car, Truck, or Bus.\n");
+        return -1; // Invalid vehicle type
+    }
+}
+// Function to calculate the discount based on vehicle type, base charge, and distance traveled
+float calculate_discount(char vehicle_type[], float base_charge, float distance) {
+    if (strcmp(vehicle_type, "Truck") == 0 && distance > 500) {
+        return 0.10 * base_charge; // 10% discount for trucks over 500 km
+    } else if (strcmp(vehicle_type, "Bus") == 0 && distance > 300) {
+        return 0.05 * base_charge; // 5% discount for buses over 300 km
+    } else {
+        return 0; // No discount
+}
+}
