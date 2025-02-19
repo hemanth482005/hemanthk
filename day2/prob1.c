@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-// Function to calculate factorial using recursion
 int factorial(int n) {
     if (n == 0 || n == 1) {
         return 1;
