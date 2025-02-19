@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Structure to store student details
 struct Student {
     char name[50];
     int marks;
