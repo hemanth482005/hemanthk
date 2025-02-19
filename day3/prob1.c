@@ -1,78 +1,30 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define MAX 100
+typedef struct { char n[50], d[50]; int a; } P;
 
-typedef struct {
-    char name[50];
-    int age;
-    char destination[50];
-} Passenger;
-
-void addPassenger(Passenger passengers[], int *count, char name[], int age, char destination[]) {
-    strcpy(passengers[*count].name, name);
-    passengers[*count].age = age;
-    strcpy(passengers[*count].destination, destination);
-    (*count)++;
-}
-
-void sortPassengers(Passenger passengers[], int count) {
-    Passenger temp;
-    for (int i = 0; i < count - 1; i++) {
-        for (int j = i + 1; j < count; j++) {
-            if (strcmp(passengers[i].destination, passengers[j].destination) > 0) {
-                temp = passengers[i];
-                passengers[i] = passengers[j];
-                passengers[j] = temp;
-            }
-        }
-    }
-}
-
-void searchPassenger(Passenger passengers[], int count, char destination[]) {
-    int found = 0;
-    printf("Passengers traveling to %s: ", destination);
-    for (int i = 0; i < count; i++) {
-        if (strcmp(passengers[i].destination, destination) == 0) {
-            printf("%s ", passengers[i].name);
-            found = 1;
-        }
-    }
-    if (!found) {
-        printf("No passengers found for %s", destination);
-    }
-    printf("\n");
-}
-
-void displayPassengers(Passenger passengers[], int count) {
-    for (int i = 0; i < count; i++) {
-        printf("%s - %s\n", passengers[i].name, passengers[i].destination);
-    }
-}
+int cmp(const void a, const void *b) { return strcmp(((P)a)->d, ((P*)b)->d); }
 
 int main() {
-    Passenger passengers[MAX];
-    int count = 0, n, age;
-    char name[50], destination[50];
-    
-    printf("Enter number of passengers: ");
-    scanf("%d", &n);
-    getchar();
-    for (int i = 0; i < n; i++) {
-        printf("Passenger %d: ", i + 1);
-        scanf("%[^,], %d, %[^]", name, &age, destination);
-        getchar();
-        addPassenger(passengers, &count, name, age, destination);
-    }
-    
-    sortPassengers(passengers, count);
-    
-    printf("\nSorted List (by destination):\n");
-    displayPassengers(passengers, count);
-    
-    printf("\nEnter destination to search: ");
-    scanf("%s", destination);
-    searchPassenger(passengers, count, destination);
-    
-    return 0;
+  int n;  printf("Enter number of passengers: ");  scanf("%d", &n);
+  P* p = (P*)malloc(n * sizeof(P));
+
+  for (int i = 0; i < n; i++) {
+    printf("Passenger %d:\nEnter name: ", i + 1); scanf(" %[^\n]s", p[i].n);
+    printf("Enter age: "); scanf("%d", &p[i].a);
+    printf("Enter destination: "); scanf(" %[^\n]s", p[i].d);
+  }
+
+  qsort(p, n, sizeof(P), cmp);
+  printf("\nSorted List (by destination):\n");
+  for (int i = 0; i < n; i++) printf("%s - %s\n", p[i].n, p[i].d);
+
+  char s[50]; printf("\nEnter destination to search: "); scanf(" %[^\n]s", s);
+  printf("Passengers traveling to %s:\n", s);
+  int f=0;
+  for (int i = 0; i < n; i++) { if (strcmp(p[i].d, s) == 0) { printf("%s\n", p[i].n); f=1; } }
+  if(!f) printf("No passengers found traveling to %s.\n",s);
+
+  free(p);  return 0;
 }
