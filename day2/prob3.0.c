@@ -1,13 +1,12 @@
 #include <stdio.h>
 
-// Function to calculate the final payable amount
 float calculateFinalAmount(float billAmount) {
     if (billAmount > 500 && billAmount <= 1000) {
-        return billAmount * 0.90; // 10% discount
+        return billAmount * 0.90;
     } else if (billAmount > 1000) {
-        return billAmount * 0.80; // 20% discount
+        return billAmount * 0.80; 
     } else {
-        return billAmount; // No discount
+        return billAmount;
     }
 }
 
