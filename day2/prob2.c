@@ -12,10 +12,8 @@ int main() {
     printf("Enter number of students: ");
     scanf("%d", &n);
 
-    // Dynamically allocate memory for n students
     struct Student *students = (struct Student *)malloc(n * sizeof(struct Student));
 
-    // Input student details
     for (int i = 0; i < n; i++) {
         printf("Enter Student %d Name: ", i + 1);
         scanf("%s", students[i].name);
